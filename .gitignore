@@ -2,3 +2,4 @@ synchrony/*.csv
 F015_M062.csv
 .vscode/settings.json
 .flake8
+.mypy_cache/*
