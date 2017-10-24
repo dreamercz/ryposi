@@ -4,17 +4,11 @@
 import csv
 import numpy
 import random
-
-
-def str2bool(string):
-    if string in ("1"):
-        return bool(True)
-    else:
-        return bool(False)
+from typing import List
 
 
 # Read the CSV file and save it as list of arrays
-with open('test.csv', 'r') as csv_file:
+with open('F015_M062.csv', 'r') as csv_file:
     read_file = csv.reader(csv_file)
     ryposi_list = list(read_file)
 
@@ -30,7 +24,8 @@ for line in ryposi_list:
 ryposi_list_all_times = list(set(ryposi_list_all_times))
 
 # Group each four by time
-for step in range(1):
+all_x = []  # type: List[int]
+for step in range(10):
 
     counted_x = 0
     i = 0
@@ -45,17 +40,32 @@ for step in range(1):
             element.remove(ryposi_list_all_times[i])
             value_matrix.append(element)
 
-        # Shuffle values in the column
-        numpy.random.shuffle(value_matrix)
+        print("Puvodni matice:\n{}".format(value_matrix))
+
         # Turn the matrix on the side
         value_matrix = numpy.swapaxes(value_matrix, 0, 1)
-        print(value_matrix)
+        print("Otocena matice:\n{}".format(value_matrix))
+
+        # Shuffle values in each column
+        random.shuffle(value_matrix[0])
+        random.shuffle(value_matrix[1])
+        print("Prohazena matice:\n{}".format(value_matrix))
+
         # Return logical AND when comparing both arrays
         truth_values = numpy.logical_and(numpy.array(value_matrix[0], dtype=bool), numpy.array(value_matrix[1], dtype=bool))
-        print(truth_values)
+        print("Konjunkce obou poli:\n{}".format(truth_values))
+
+        # Count the number of [1;1] matches towards this step's X value
+        if True in truth_values:
+            counted_x += 1
 
         i += 1
-    print("\nHodnota X pro beh cislo {}: {}".format(step, counted_x))
+
+    print("\n Hodnota X pro beh cislo {}: {}\n---".format(step + 1, counted_x))
+    all_x.append(counted_x)
     step += 1
 
 print("Celkovy pocet kroku: {}".format(step))
+print("Celkovy pocet hodnot X: {}".format(all_x))
+
+# Compute overall p value
