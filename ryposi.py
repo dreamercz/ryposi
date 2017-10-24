@@ -24,8 +24,8 @@ for line in ryposi_list:
 ryposi_list_all_times = list(set(ryposi_list_all_times))
 
 # Group each four by time
-all_x = []  # type: List[int]
-for step in range(10):
+all_xp_array = []  # type: List[int]
+for step in range(1):
 
     counted_x = 0
     i = 0
@@ -61,11 +61,21 @@ for step in range(10):
 
         i += 1
 
-    print("\n Hodnota X pro beh cislo {}: {}\n---".format(step + 1, counted_x))
-    all_x.append(counted_x)
+    print("\nHodnota X pro beh cislo {}: {}".format(step + 1, counted_x))
+    all_xp_array.append(counted_x)
     step += 1
 
 print("Celkovy pocet kroku: {}".format(step))
-print("Celkovy pocet hodnot X: {}".format(all_x))
+print("Celkovy pocet hodnot X: {}".format(all_xp_array))
 
 # Compute overall p value
+# Kolikrat jsou nahodne p vetsi nebo rovno pravemu p
+TRUE_XP = 51
+occurences = 0
+for value in all_xp_array:
+    if value >= TRUE_XP:
+        occurences += 1
+    else:
+        pass
+
+print("Nahodne ziskane xp jsou vyssi nebo rovny v celkem  {} pripadech.".format(occurences))
