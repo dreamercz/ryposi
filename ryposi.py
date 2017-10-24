@@ -8,7 +8,7 @@ from typing import List
 
 
 # Read the CSV file and save it as list of arrays
-with open('F015_M062.csv', 'r') as csv_file:
+with open('synchrony/F027_F485.csv', 'r') as csv_file:
     read_file = csv.reader(csv_file)
     ryposi_list = list(read_file)
 
@@ -25,7 +25,7 @@ ryposi_list_all_times = list(set(ryposi_list_all_times))
 
 # Group each four by time
 all_xp_array = []  # type: List[int]
-for step in range(1):
+for step in range(3000):
 
     counted_x = 0
     i = 0
@@ -40,20 +40,20 @@ for step in range(1):
             element.remove(ryposi_list_all_times[i])
             value_matrix.append(element)
 
-        print("Puvodni matice:\n{}".format(value_matrix))
+        # print("-----\nPuvodni matice:\n{}".format(value_matrix))
 
         # Turn the matrix on the side
         value_matrix = numpy.swapaxes(value_matrix, 0, 1)
-        print("Otocena matice:\n{}".format(value_matrix))
+        # print("Otocena matice:\n{}".format(value_matrix))
 
         # Shuffle values in each column
         random.shuffle(value_matrix[0])
         random.shuffle(value_matrix[1])
-        print("Prohazena matice:\n{}".format(value_matrix))
+        # print("Prohazena matice:\n{}".format(value_matrix))
 
         # Return logical AND when comparing both arrays
         truth_values = numpy.logical_and(numpy.array(value_matrix[0], dtype=bool), numpy.array(value_matrix[1], dtype=bool))
-        print("Konjunkce obou poli:\n{}".format(truth_values))
+        # print("Konjunkce obou poli:\n{}".format(truth_values))
 
         # Count the number of [1;1] matches towards this step's X value
         if True in truth_values:
@@ -61,16 +61,16 @@ for step in range(1):
 
         i += 1
 
-    print("\nHodnota X pro beh cislo {}: {}".format(step + 1, counted_x))
+    print("Hodnota X pro fazi cislo {}: {}".format(step + 1, counted_x))
     all_xp_array.append(counted_x)
     step += 1
 
-print("Celkovy pocet kroku: {}".format(step))
-print("Celkovy pocet hodnot X: {}".format(all_xp_array))
+print("Celkovy pocet fazi: {}".format(step))
+print("Hodnoty X celkem: {}".format(all_xp_array))
 
 # Compute overall p value
 # Kolikrat jsou nahodne p vetsi nebo rovno pravemu p
-TRUE_XP = 51
+TRUE_XP = 94
 occurences = 0
 for value in all_xp_array:
     if value >= TRUE_XP:
@@ -78,4 +78,4 @@ for value in all_xp_array:
     else:
         pass
 
-print("Nahodne ziskane xp jsou vyssi nebo rovny v celkem  {} pripadech.".format(occurences))
+print("Nahodne ziskane xp jsou vyssi nebo rovny v celkem {} pripadech.".format(occurences))
