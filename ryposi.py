@@ -7,8 +7,11 @@ import random
 from typing import List
 
 
+number_of_phases = range(1000)
+TRUE_XP = 43
+
 # Read the CSV file and save it as list of arrays
-with open('synchrony/F027_F485.csv', 'r') as csv_file:
+with open('synchrony/M062_M092.csv', 'r') as csv_file:
     read_file = csv.reader(csv_file)
     ryposi_list = list(read_file)
 
@@ -25,7 +28,7 @@ ryposi_list_all_times = list(set(ryposi_list_all_times))
 
 # Group each four by time
 all_xp_array = []  # type: List[int]
-for step in range(3000):
+for step in number_of_phases:
 
     counted_x = 0
     i = 0
@@ -56,9 +59,9 @@ for step in range(3000):
         # print("Konjunkce obou poli:\n{}".format(truth_values))
 
         # Count the number of [1;1] matches towards this step's X value
-        if True in truth_values:
-            counted_x += 1
-
+        counted_x += sum(truth_values)
+        # print(counted_x)
+        # print(sum(truth_values))
         i += 1
 
     print("Hodnota X pro fazi cislo {}: {}".format(step + 1, counted_x))
@@ -69,8 +72,7 @@ print("Celkovy pocet fazi: {}".format(step))
 print("Hodnoty X celkem: {}".format(all_xp_array))
 
 # Compute overall p value
-# Kolikrat jsou nahodne p vetsi nebo rovno pravemu p
-TRUE_XP = 94
+# Kolikrat jsou nahodne x vetsi nebo rovno pravemu x
 occurences = 0
 for value in all_xp_array:
     if value >= TRUE_XP:
@@ -79,3 +81,5 @@ for value in all_xp_array:
         pass
 
 print("Nahodne ziskane xp jsou vyssi nebo rovny v celkem {} pripadech.".format(occurences))
+p_value = occurences / step
+print("P value = {}".format(p_value))
