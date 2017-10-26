@@ -4,14 +4,17 @@
 import csv
 import numpy
 import random
-from typing import List
+from typing import List  # noqa F401
 
 
-number_of_phases = range(1000)
-TRUE_XP = 43
+# Configuration
+synchron_file_path = "synchrony/F027_F485.csv"
+number_of_phases = 1000
+doshuffle = True
+TRUE_X = 94
 
 # Read the CSV file and save it as list of arrays
-with open('synchrony/M062_M092.csv', 'r') as csv_file:
+with open(synchron_file_path, 'r') as csv_file:
     read_file = csv.reader(csv_file)
     ryposi_list = list(read_file)
 
@@ -28,7 +31,7 @@ ryposi_list_all_times = list(set(ryposi_list_all_times))
 
 # Group each four by time
 all_xp_array = []  # type: List[int]
-for step in number_of_phases:
+for step in range(number_of_phases):
 
     counted_x = 0
     i = 0
@@ -50,8 +53,9 @@ for step in number_of_phases:
         # print("Otocena matice:\n{}".format(value_matrix))
 
         # Shuffle values in each column
-        random.shuffle(value_matrix[0])
-        random.shuffle(value_matrix[1])
+        if doshuffle is True:
+            random.shuffle(value_matrix[0])
+            random.shuffle(value_matrix[1])
         # print("Prohazena matice:\n{}".format(value_matrix))
 
         # Return logical AND when comparing both arrays
@@ -75,7 +79,7 @@ print("Hodnoty X celkem: {}".format(all_xp_array))
 # Kolikrat jsou nahodne x vetsi nebo rovno pravemu x
 occurences = 0
 for value in all_xp_array:
-    if value >= TRUE_XP:
+    if value >= TRUE_X:
         occurences += 1
     else:
         pass
