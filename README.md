@@ -1,0 +1,1 @@
+## Skript na výpočet p na datech získaných pozorováním rypošů
