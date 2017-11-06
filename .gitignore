@@ -4,3 +4,4 @@ F015_M062.csv
 .flake8
 .mypy_cache/*
 test.csv
+test/
