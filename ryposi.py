@@ -8,10 +8,16 @@ from typing import List  # noqa F401
 
 
 # Configuration
-synchron_file_path = "test/xxx.csv"
-number_of_phases = 1000
+synchron_file_path = "test.csv"
+number_of_phases = 1
 doshuffle = True
-TRUE_X = 0
+TRUE_X = 119
+
+
+def swichOnesAndZeros(array_item):
+    array_item = 1 - int(array_item)
+    return str(array_item)
+
 
 # Read the CSV file and save it as list of arrays
 with open(synchron_file_path, 'r') as csv_file:
@@ -46,26 +52,26 @@ for step in range(number_of_phases):
             element.remove(ryposi_list_all_times[i])
             value_matrix.append(element)
 
-        # print("-----\nPuvodni matice:\n{}".format(value_matrix))
+        print("-----\nPuvodni matice:\n{}".format(value_matrix))
 
         # Turn the matrix on the side
         value_matrix = numpy.swapaxes(value_matrix, 0, 1)
-        # print("Otocena matice:\n{}".format(value_matrix))
+        print("Otocena matice:\n{}".format(value_matrix))
 
-        # Shuffle values in each column
+        # Switch 0 with 1 in the array and vice versa
         if doshuffle is True:
-            random.shuffle(value_matrix[0])
-            random.shuffle(value_matrix[1])
-        # print("Prohazena matice:\n{}".format(value_matrix))
+            value_matrix[0] = [swichOnesAndZeros(x) for x in value_matrix[0]]
+            value_matrix[1] = [swichOnesAndZeros(x) for x in value_matrix[1]]
+        print("Prohazena matice:\n{}".format(value_matrix))
 
         # Return logical AND when comparing both arrays
         truth_values = numpy.logical_and(numpy.array(value_matrix[0], dtype=bool), numpy.array(value_matrix[1], dtype=bool))
-        # print("Konjunkce obou poli:\n{}".format(truth_values))
+        print("Konjunkce obou poli:\n{}".format(truth_values))
 
         # Count the number of [1;1] matches towards this step's X value
         counted_x += sum(truth_values)
-        # print(counted_x)
-        # print(sum(truth_values))
+        print(counted_x)
+        print(sum(truth_values))
         i += 1
 
     print("Hodnota X pro fazi cislo {}: {}".format(step + 1, counted_x))
