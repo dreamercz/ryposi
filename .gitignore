@@ -1,4 +1,4 @@
-synchrony/*.csv
+synchrony/
 F015_M062.csv
 .vscode/settings.json
 .flake8
