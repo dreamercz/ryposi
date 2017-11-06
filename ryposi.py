@@ -8,10 +8,10 @@ from typing import List  # noqa F401
 
 
 # Configuration
-synchron_file_path = "synchrony/???.csv"
+synchron_file_path = "test/xxx.csv"
 number_of_phases = 1000
 doshuffle = True
-TRUE_X = ???
+TRUE_X = 0
 
 # Read the CSV file and save it as list of arrays
 with open(synchron_file_path, 'r') as csv_file:
