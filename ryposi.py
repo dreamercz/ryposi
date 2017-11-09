@@ -59,9 +59,12 @@ for step in range(number_of_phases):
         print("Otocena matice:\n{}".format(value_matrix))
 
         # Switch 0 with 1 in the array and vice versa
+        value_matrix[0] = [swichOnesAndZeros(x) for x in value_matrix[0]]
+        value_matrix[1] = [swichOnesAndZeros(x) for x in value_matrix[1]]
         if doshuffle is True:
-            value_matrix[0] = [swichOnesAndZeros(x) for x in value_matrix[0]]
-            value_matrix[1] = [swichOnesAndZeros(x) for x in value_matrix[1]]
+            # Shuffle the values in each array randomly
+            random.shuffle(value_matrix[0])
+            random.shuffle(value_matrix[1])
         print("Prohazena matice:\n{}".format(value_matrix))
 
         # Return logical AND when comparing both arrays
